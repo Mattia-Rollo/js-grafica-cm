@@ -49,11 +49,13 @@ function play() {
                 <span>${num}</span>
         `;
         cell.addEventListener('click',function() {
-            //se clicco e il numero corrisponde a quello della lista bombs allora diventa rosso altrimenti green
+            //se clicco e il numero NON corrisponde al numero presente in 'bombsPosition' 
+            //diventa green, altrimenti prendo tutti gli elementi con la classe square 
+            //e aggiungo la classe red in base alla posizione delle bombe 
+            //e tolgo la classe green a tutti gli square 
             if(!bombsPosition.includes(num)){
             this.classList.add('green');
             }else {
-                this.classList.add('red');
                 const squares = document.querySelectorAll('.square');
                 for(let i = 0; i < squares.length; i++){
                     squares[i].classList.remove('green');
