@@ -59,6 +59,8 @@ function play() {
                 const squares = document.querySelectorAll('.square');
                 for(let i = 0; i < squares.length; i++){
                     squares[i].classList.remove('green');
+                    //per conbaciare l'index con i numeri da 1 a 100 presenti nella lista 'bombsPosition'
+                    //aumento di uno 'i'
                     if(bombsPosition.includes(i+1)) {
                         squares[i].classList.add('red');
                     }
