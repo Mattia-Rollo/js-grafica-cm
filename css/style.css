@@ -1,0 +1,34 @@
+body {
+    background-color: black;
+}
+header, footer {
+    height: 80px;
+}
+main {
+    background-color: antiquewhite;
+    height: calc(100vh - 160px);
+    overflow-y: auto;
+}
+h2 {
+    color: rgb(135, 222, 154);
+}
+.grid {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    height: 500px;
+    width: 500px;
+    border: 1px solid black;
+}
+.square {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: calc(100% / 10);
+    height: calc(100% / 10);
+    border: 1px solid black;
+    cursor: pointer;
+}
+.green {
+    background-color: aqua;
+}
