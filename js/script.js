@@ -9,10 +9,11 @@ function play() {
     
     const NUM_BOMB = 16; 
     const bombsPosition = [];
-    
+    let check = false;
 
     let numCell;
     const fieldGame = document.getElementById('field-game');
+    console.log(fieldGame)
     fieldGame.innerHTML = '';
     const levelHTML = document.getElementById('livello');
     const level = levelHTML.value;
@@ -47,16 +48,26 @@ function play() {
                 <span>${num}</span>
         `;
         cell.addEventListener('click',function() {
-            //se clicco e il numero corrisponde a quello della lista bombs allora diventa
+            //se clicco e il numero corrisponde a quello della lista bombs allora diventa rosso altrimenti green
             if(!bombsPosition.includes(num)){
             this.classList.add('green');
             }else {
                 this.classList.add('red');
-
+                // console.log(document.querySelectorAll('red'));
+                check = true;
+                const redDiv = document.getElementsByClassName('red');
+                console.log(redDiv.classList.);
             }
         })
         return cell;
     }
+    
+        const redDiv = document.getElementsByClassName('red');
+        console.log(redDiv);
+    
+
+    
+
 
     //funzione che genera il campo di gioco
     function drawGrid() {
