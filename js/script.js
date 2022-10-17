@@ -36,6 +36,7 @@ function play() {
         bombsPosition.push(bomb);
         }
     }
+    bombsPosition.sort();
     console.log(bombsPosition);
     //funzione che genera la cella 
     function drawCell(num) {
@@ -53,36 +54,51 @@ function play() {
             this.classList.add('green');
             }else {
                 this.classList.add('red');
-                // console.log(document.querySelectorAll('red'));
+                const squares = document.querySelectorAll('.square');
+                for(let i = 0; i < squares.length; i++){
+                    squares[i].classList.remove('green');
+                    if(bombsPosition.includes(i+1)) {
+                        squares[i].classList.add('red');
+                    }
+                // console.log(squares);
                 check = true;
-                const redDiv = document.getElementsByClassName('red');
-                console.log(redDiv.classList.);
+                }
             }
         })
         return cell;
     }
     
-        const redDiv = document.getElementsByClassName('red');
-        console.log(redDiv);
     
-
-    
-
-
-    //funzione che genera il campo di gioco
-    function drawGrid() {
-        // const fieldGame = document.getElementById('field-game');
-        const grid = document.createElement('div');
-        grid.className = "grid";
-        for(let i = 1; i <= numCell; i++){
-            const cell = drawCell(i);
-            grid.appendChild(cell);
+    // const div = document.querySelectorAll('square');
+    // console.log(div[3]);
+    // function allRed() {
+        //     if(check) {
+            
+            //     }
+            
+            // }
+            
+            //funzione che genera il campo di gioco
+            function drawGrid() {
+                // const fieldGame = document.getElementById('field-game');
+                const grid = document.createElement('div');
+                grid.className = "grid";
+                for(let i = 1; i <= numCell; i++){
+                    const cell = drawCell(i);
+                    grid.appendChild(cell);
+                }
+                fieldGame.appendChild(grid);
+            }
+            //chiamo la funzione
+            drawGrid();
+            // if(check) {
+            // const squares = document.querySelectorAll('.square');
+            // console.log(squares);
+            // for(let i = 0; i < squares.length;i++){
+                
+            // }
+            // }
         }
-        fieldGame.appendChild(grid);
-    }
-    //chiamo la funzione
-    drawGrid();
-}
-
-//attacco l'event listener
-playButton.addEventListener('click',play);
+        
+        //attacco l'event listener
+        playButton.addEventListener('click',play);
