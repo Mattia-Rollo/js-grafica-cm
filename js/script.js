@@ -13,7 +13,7 @@ function play() {
 
     let numCell;
     const fieldGame = document.getElementById('field-game');
-    console.log(fieldGame)
+    console.log(fieldGame);
     fieldGame.innerHTML = '';
     const levelHTML = document.getElementById('livello');
     const level = levelHTML.value;
@@ -29,6 +29,7 @@ function play() {
             numCell = 49;
             break;
     }
+    bombsPosition.sort();
     // genera bombe
     while(bombsPosition.length < NUM_BOMB) {
         const bomb = getRndInteger(1, numCell);
@@ -36,7 +37,6 @@ function play() {
         bombsPosition.push(bomb);
         }
     }
-    bombsPosition.sort();
     console.log(bombsPosition);
     //funzione che genera la cella 
     function drawCell(num) {
@@ -46,26 +46,38 @@ function play() {
         cell.style.width = `calc(100% / ${cellPerSide})`;
         cell.style.height = `calc(100% / ${cellPerSide})`;
         cell.innerHTML = `
-                <span>${num}</span>
+                <span class="invisible">${num}</span>
         `;
-        cell.addEventListener('click',function() {
+        cell.addEventListener('click',function sciegli() {
             //se clicco e il numero NON corrisponde al numero presente in 'bombsPosition' 
             //diventa green, altrimenti prendo tutti gli elementi con la classe square 
             //e aggiungo la classe red in base alla posizione delle bombe 
             //e tolgo la classe green a tutti gli square 
+            
             if(!bombsPosition.includes(num)){
+            //se non è presente allora è Green e scrivi il numero
             this.classList.add('green');
+            cell.innerHTML = `
+                <span class="visible">${num}</span>
+            `;
             }else {
                 const squares = document.querySelectorAll('.square');
+                
                 for(let i = 0; i < squares.length; i++){
+                    squares[i].innerHTML = "";
                     squares[i].classList.remove('green');
+
                     //per conbaciare l'index con i numeri da 1 a 100 presenti nella lista 'bombsPosition'
                     //aumento di uno 'i'
                     if(bombsPosition.includes(i+1)) {
                         squares[i].classList.add('red');
+                        squares[i].innerHTML = `
+                        <span class="visible">${i+1}</span>
+                    `;
                     }
-                // console.log(squares);
-                check = true;
+                    // console.log(squares);
+                    check = true;
+                    cell.removeEventListener('click',sciegli);
                 }
             }
         })
@@ -73,14 +85,7 @@ function play() {
     }
     
     
-    // const div = document.querySelectorAll('square');
-    // console.log(div[3]);
-    // function allRed() {
-        //     if(check) {
-            
-            //     }
-            
-            // }
+    
             
             //funzione che genera il campo di gioco
             function drawGrid() {
@@ -95,14 +100,8 @@ function play() {
             }
             //chiamo la funzione
             drawGrid();
-            // if(check) {
-            // const squares = document.querySelectorAll('.square');
-            // console.log(squares);
-            // for(let i = 0; i < squares.length;i++){
-                
-            // }
-            // }
-        }
+            
+}
         
         //attacco l'event listener
         playButton.addEventListener('click',play);
