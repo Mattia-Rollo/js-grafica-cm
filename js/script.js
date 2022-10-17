@@ -47,7 +47,13 @@ function play() {
                 <span>${num}</span>
         `;
         cell.addEventListener('click',function() {
+            //se clicco e il numero corrisponde a quello della lista bombs allora diventa
+            if(!bombsPosition.includes(num)){
             this.classList.add('green');
+            }else {
+                this.classList.add('red');
+
+            }
         })
         return cell;
     }

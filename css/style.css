@@ -1,16 +1,16 @@
 body {
-    background-color: black;
+    background-color: rgb(255, 255, 255);
 }
 header, footer {
     height: 80px;
 }
 main {
-    background-color: antiquewhite;
+    background-color: rgb(78, 251, 237);
     height: calc(100vh - 160px);
     overflow-y: auto;
 }
 h2 {
-    color: rgb(135, 222, 154);
+    color: rgb(0, 0, 0);
 }
 .grid {
     display: flex;
@@ -30,5 +30,8 @@ h2 {
     cursor: pointer;
 }
 .green {
-    background-color: aqua;
+    background-color: rgb(72, 187, 91);
+}
+.red {
+    background-color: brown;
 }
