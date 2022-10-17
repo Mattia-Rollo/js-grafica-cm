@@ -42,13 +42,20 @@ function play() {
     function drawCell(num) {
         const cellPerSide = Math.sqrt(numCell)
         const cell = document.createElement('div');
+        console.log(cell);
         cell.className = 'square';
         cell.style.width = `calc(100% / ${cellPerSide})`;
         cell.style.height = `calc(100% / ${cellPerSide})`;
         cell.innerHTML = `
                 <span class="invisible">${num}</span>
         `;
-        cell.addEventListener('click',function sciegli() {
+        // for(let i= 0; i < squares.length; i++){
+        //     squares[i].addEventListener('click',sciegli);
+        // }
+        cell.addEventListener('click', sciegli);
+        
+        
+        function sciegli() {
             //se clicco e il numero NON corrisponde al numero presente in 'bombsPosition' 
             //diventa green, altrimenti prendo tutti gli elementi con la classe square 
             //e aggiungo la classe red in base alla posizione delle bombe 
@@ -61,26 +68,32 @@ function play() {
                 <span class="visible">${num}</span>
             `;
             }else {
-                const squares = document.querySelectorAll('.square');
-                
+                const squares = document.querySelectorAll('div.square');
+            
+                // console.log(cell);
                 for(let i = 0; i < squares.length; i++){
+                    squares[i].removeEventListener('click',sciegli);
                     squares[i].innerHTML = "";
-                    squares[i].classList.remove('green');
-
+                    // squares[i].classList.remove('green');
+                    squares[i].classList.add('no-click');
                     //per conbaciare l'index con i numeri da 1 a 100 presenti nella lista 'bombsPosition'
                     //aumento di uno 'i'
                     if(bombsPosition.includes(i+1)) {
                         squares[i].classList.add('red');
+                        
                         squares[i].innerHTML = `
                         <span class="visible">${i+1}</span>
                     `;
-                    }
+                }
+                // console.log(squares[i])
+                
                     // console.log(squares);
                     check = true;
-                    cell.removeEventListener('click',sciegli);
                 }
             }
-        })
+
+
+        }
         return cell;
     }
     
@@ -103,5 +116,16 @@ function play() {
             
 }
         
+
+// if(check){
+//     const squares = document.querySelectorAll('.square');
+
+
+//     for(let i = 0; i < squares.length; i++){
+//         squares[i].removeEventListener('click',)
+//     }
+
+// }
+
         //attacco l'event listener
         playButton.addEventListener('click',play);

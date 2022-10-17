@@ -38,3 +38,6 @@ h2 {
 .text-green {
     color: rgb(47, 208, 47);
 }
+.no-click {
+    pointer-events: none;
+}
