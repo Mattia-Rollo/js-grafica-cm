@@ -17,6 +17,7 @@ const playButton = document.getElementById('play');
 
 function play() {
     console.log('Inizio gioco....')
+    h3.innerHTML = 'Logo';
 
     const NUM_BOMB = 16;
     const bombsPosition = []; // 16 numeri random non ripetuti
@@ -128,6 +129,7 @@ function play() {
     //funzione che genera il campo di gioco
     function drawGrid() {
         // const fieldGame = document.getElementById('field-game');
+        
         const grid = document.createElement('div');
         grid.className = "grid";
         for (let i = 1; i <= numCell; i++) {
@@ -142,6 +144,8 @@ function play() {
     function endGame() {
         console.log('endGame');
         //prendo tutti i quadratini
+        const h3 = document.getElementById('h3');
+        h3.innerHTML = 'punteggio: ' + score;
         const squares = document.getElementsByClassName('square');
         console.log(squares);
         for (let i = 0; i < squares.length; i++) {
@@ -153,9 +157,13 @@ function play() {
                 squares[i].classList.add('red');
             }
         }
+
+        const textFooter = document.getElementById('text-footer');
         if (score === MAX_ATTEMPT) {
+            textFooter.innerHTML = 'Hai Vinto!'
             console.log('hai vinto');
         } else {
+            textFooter.innerHTML = 'Hai Perso!'
             console.log('hai perso');
         }
     }
