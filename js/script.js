@@ -18,6 +18,8 @@ const playButton = document.getElementById('play');
 function play() {
     console.log('Inizio gioco....')
     h3.innerHTML = 'Logo';
+    const textFooter = document.getElementById('text-footer');
+    textFooter.innerHTML = '';
 
     const NUM_BOMB = 16;
     const bombsPosition = []; // 16 numeri random non ripetuti
@@ -140,6 +142,9 @@ function play() {
     }
     //chiamo la funzione
     drawGrid();
+    
+    
+
 
     function endGame() {
         console.log('endGame');
@@ -158,12 +163,11 @@ function play() {
             }
         }
 
-        const textFooter = document.getElementById('text-footer');
         if (score === MAX_ATTEMPT) {
-            textFooter.innerHTML = 'Hai Vinto!'
+            textFooter.innerHTML = '<h2>Hai Vinto!</h2>'
             console.log('hai vinto');
         } else {
-            textFooter.innerHTML = 'Hai Perso!'
+            textFooter.innerHTML = '<h2>Hai Perso!</h2>'
             console.log('hai perso');
         }
     }
