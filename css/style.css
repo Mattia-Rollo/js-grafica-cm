@@ -3,9 +3,10 @@ body {
 }
 header, footer {
     height: 80px;
+    box-shadow: ;
 }
 main {
-    background-color: rgb(78, 251, 237);
+    background-color: rgb(129, 207, 200);
     height: calc(100vh - 160px);
     overflow-y: auto;
 }

@@ -75,7 +75,7 @@ function play() {
                     squares[i].removeEventListener('click',sciegli);
                     squares[i].innerHTML = "";
                     // squares[i].classList.remove('green');
-                    squares[i].classList.add('no-click');
+                    // squares[i].classList.add('no-click');
                     //per conbaciare l'index con i numeri da 1 a 100 presenti nella lista 'bombsPosition'
                     //aumento di uno 'i'
                     if(bombsPosition.includes(i+1)) {
