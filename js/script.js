@@ -1,4 +1,15 @@
 "use strict"
+//xIl computer deve generare 16 numeri casuali nello stesso range della difficoltà prescelta: le bombe.
+
+
+// xI numeri nella lista delle bombe non possono essere duplicati.
+// x In seguito l'utente clicca su una cella: se il numero è presente nella lista dei numeri generati - abbiamo calpestato una bomba - la cella si colora di rosso 
+// x e la partita termina, altrimenti la cella cliccata si colora di azzurro e l'utente può continuare a cliccare sulle altre celle.
+// x La partita termina quando il giocatore clicca su una bomba o raggiunge il numero massimo possibile di tentativi consentiti.
+// Al termine della partita il software deve comunicare il punteggio, cioè il numero di volte che l’utente ha cliccato su una cella che non era una bomba.
+// BONUS:
+// 1- quando si clicca su una bomba e finisce la partita, evitare che si possa cliccare su altre celle
+// 2- quando si clicca su una bomba e finisce la partita, il software scopre tutte le bombe nascoste
 
 
 //prendo il bottone play
@@ -8,9 +19,9 @@ function play() {
     console.log('Inizio gioco....')
     
     const NUM_BOMB = 16; 
-    const bombsPosition = [];
-    let check = false;
-
+    const bombsPosition = []; // 16 numeri random non ripetuti
+    // let check = false;
+    let score = 0;
     let numCell;
     const fieldGame = document.getElementById('field-game');
     console.log(fieldGame);
@@ -29,7 +40,7 @@ function play() {
             numCell = 49;
             break;
     }
-    bombsPosition.sort();
+    
     // genera bombe
     while(bombsPosition.length < NUM_BOMB) {
         const bomb = getRndInteger(1, numCell);
@@ -39,10 +50,68 @@ function play() {
     }
     console.log(bombsPosition);
     //funzione che genera la cella 
+
+    const MAX_ATTEMPT = numCell - NUM_BOMB;
+
+    function scegli() {
+        //se clicco e il numero NON corrisponde al numero presente in 'bombsPosition' 
+        //diventa green, altrimenti prendo tutti gli elementi con la classe square 
+        //e aggiungo la classe red in base alla posizione delle bombe 
+        //e tolgo la classe green a tutti gli square 
+        const span = this.querySelector('span');
+        console.log(span);
+        const num = parseInt(span.textContent);
+        // console.log(num);
+        this.removeEventListener('click',scegli);
+        
+        if(!bombsPosition.includes(num)){
+            //se non è presente allora è Green e scrivi il numero
+            this.classList.add('green');
+            this.innerHTML = `
+            <span class="visible">${num}</span>
+            `;
+            score++;
+            console.log(score);
+
+            if(score === MAX_ATTEMPT){
+                endGame();
+        }
+        }else {
+
+            
+            this.style.backgroundColor = 'red';
+            endGame();
+
+            // const squares = document.querySelectorAll('div.square');
+        
+            // console.log(cell);
+            // for(let i = 0; i < squares.length; i++){
+            //     squares[i].removeEventListener('click',sciegli);
+            //     squares[i].innerHTML = "";
+                // squares[i].classList.remove('green');
+                // squares[i].classList.add('no-click');
+                //per conbaciare l'index con i numeri da 1 a 100 presenti nella lista 'bombsPosition'
+                //aumento di uno 'i'
+            //     if(bombsPosition.includes(i+1)) {
+            //         squares[i].classList.add('red');
+                    
+            //         squares[i].innerHTML = `
+            //         <span class="visible">${i+1}</span>
+            //     `;
+            // }
+            // console.log(squares[i])
+            
+                // console.log(squares);
+                // check = true;
+            // }
+        }
+    
+    }
+    
     function drawCell(num) {
         const cellPerSide = Math.sqrt(numCell)
         const cell = document.createElement('div');
-        console.log(cell);
+        // console.log(cell);
         cell.className = 'square';
         cell.style.width = `calc(100% / ${cellPerSide})`;
         cell.style.height = `calc(100% / ${cellPerSide})`;
@@ -52,51 +121,9 @@ function play() {
         // for(let i= 0; i < squares.length; i++){
         //     squares[i].addEventListener('click',sciegli);
         // }
-        cell.addEventListener('click', sciegli);
-        
-        
-        function sciegli() {
-            //se clicco e il numero NON corrisponde al numero presente in 'bombsPosition' 
-            //diventa green, altrimenti prendo tutti gli elementi con la classe square 
-            //e aggiungo la classe red in base alla posizione delle bombe 
-            //e tolgo la classe green a tutti gli square 
-            
-            if(!bombsPosition.includes(num)){
-            //se non è presente allora è Green e scrivi il numero
-            this.classList.add('green');
-            cell.innerHTML = `
-                <span class="visible">${num}</span>
-            `;
-            }else {
-                const squares = document.querySelectorAll('div.square');
-            
-                // console.log(cell);
-                for(let i = 0; i < squares.length; i++){
-                    squares[i].removeEventListener('click',sciegli);
-                    squares[i].innerHTML = "";
-                    // squares[i].classList.remove('green');
-                    squares[i].classList.add('no-click');
-                    //per conbaciare l'index con i numeri da 1 a 100 presenti nella lista 'bombsPosition'
-                    //aumento di uno 'i'
-                    if(bombsPosition.includes(i+1)) {
-                        squares[i].classList.add('red');
-                        
-                        squares[i].innerHTML = `
-                        <span class="visible">${i+1}</span>
-                    `;
-                }
-                // console.log(squares[i])
-                
-                    // console.log(squares);
-                    check = true;
-                }
-            }
-
-
-        }
+        cell.addEventListener('click', scegli);
         return cell;
     }
-    
     
     
             
@@ -113,7 +140,27 @@ function play() {
             }
             //chiamo la funzione
             drawGrid();
-            
+           
+            function endGame() {
+                console.log('endGame');
+                //prendo tutti i quadratini
+                const squares = document.getElementsByClassName('square');
+                console.log(squares);
+                for(let i = 0; i < squares.length; i++){
+                    squares[i].removeEventListener('click',scegli);
+                    //se i+1 è nell'array delle bombe le scoperchiamo
+                    //if square[i] == bombsPosition
+                    let num = i+1;
+                    if(bombsPosition.includes(num)){
+                        squares[i].classList.add('red');
+                    }
+                }
+                if(score === MAX_ATTEMPT) {
+                    console.log('hai vinto');
+                }else {
+                    console.log('hai perso');
+                }
+            }
 }
         
 
